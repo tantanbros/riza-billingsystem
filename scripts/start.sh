@@ -7,3 +7,4 @@ docker-compose up -d --build
 docker-compose ps 
 
 sh ./nginx/setup.sh
+sh ./nginx/start.sh
