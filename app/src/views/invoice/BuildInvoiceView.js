@@ -6,6 +6,7 @@ import Alert from 'src/components/Alert';
 import InvoiceContext, { EmptyCustomer } from 'src/contexts/InvoiceContext';
 import CustomerInformation from './CustomerInformation';
 import BillingInformation from './BillingInformation';
+import AppContext from 'src/contexts/AppContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles(theme => ({
 const BuildInvoiceView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const { signedUser } = React.useContext(AppContext);
 
   const [notification, setNotification] = React.useState({
     open: false,
@@ -73,7 +75,7 @@ const BuildInvoiceView = () => {
 
     // TODO: Get the billerId from the logged in, port authority
     const loggedPortAuthority = {
-      _id: '5f4058428d692b42ec8738e9'
+      _id: signedUser?._id
     };
     const invoiceToCreate = {
       customer: selectedCustomer._id,
