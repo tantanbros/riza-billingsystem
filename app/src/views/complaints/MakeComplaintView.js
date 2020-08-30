@@ -9,6 +9,7 @@ import Slide from '@material-ui/core/Slide';
 import { useForm } from 'react-hook-form';
 import RequiredTextField from 'src/components/RequiredTextField';
 import Alert from 'src/components/Alert';
+import AppContext from 'src/contexts/AppContext';
 
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -17,6 +18,7 @@ const Transition = React.forwardRef((props, ref) => {
 const MakeComplaintView = () => {
   // TODO: Lagay nalang to as popup form
   // nasa dashboard yung button to say "make a complaint" instead of may own route pa sya
+  const { signedUser } = React.useContext(AppContext);
 
   const [open, setOpen] = React.useState(false);
   const [notification, setNotification] = React.useState({
@@ -34,7 +36,8 @@ const MakeComplaintView = () => {
     }
   });
 
-  const complainant = '5f4057ed5a146d379cb500cf';
+  // const complainant = '5f4057ed5a146d379cb500cf';
+  const complainant = signedUser?._id;
 
   const onSubmit = ({ message }) => {
     const complaint = { complainant, message };
