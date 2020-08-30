@@ -103,7 +103,7 @@ const BuildInvoiceView = () => {
 
         // go to the invoices list after successful create of invoice
         setTimeout(() => {
-          navigate('/invoices');
+          navigate('/portauthority');
         }, 500);
       })
       .catch(err => {
