@@ -1,0 +1,28 @@
+# pull base image
+FROM node:alpine as builder
+
+# set working directory
+WORKDIR /app
+
+# add node_modules/.bin to $PATH
+ENV PATH ./node_modules/.bin:$PATH
+
+# install yarn
+RUN apk add --no-cache yarn
+
+# install dependencies
+COPY package.json yarn.lock ./
+RUN yarn install
+
+# add app
+COPY . .
+
+# build the app
+RUN yarn run build
+
+# Nginx
+FROM nginx:stable-alpine
+COPY --from=builder /app/build /usr/share/nginx/html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx/nginx.conf /etc/nginx/conf.d
+CMD ["nginx", "-g", "daemon off;"]

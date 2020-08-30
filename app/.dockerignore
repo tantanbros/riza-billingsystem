@@ -1,0 +1,12 @@
+**/node_modules
+build
+.dockerignore
+Dockerfile
+Dockerfile.prod
+.vscode
+.eslintrc
+.prettierignore
+.prettierrc
+.LICENSE.md
+.README.md
+.editorconfig

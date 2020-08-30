@@ -1,0 +1,61 @@
+version: "3.0"
+
+services:
+  rizaapi:
+    container_name: rizaapi
+    build:
+      context: ./api
+      dockerfile: Dockerfile.prod
+    restart: unless-stopped
+    depends_on:
+      - rizadb
+    ports:
+      - 5000:5000
+    networks:
+      - internal
+      - web
+  rizaapp:
+    container_name: rizaapp
+    build:
+      context: ./app
+      dockerfile: Dockerfile.prod
+    restart: unless-stopped
+    ports:
+      - 3000:80
+    depends_on:
+      - rizaapi
+    networks:
+      - web
+  rizadb:
+    container_name: rizadb
+    image: mongo:latest
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=mGNKfJbUxYXMd9HC
+      - MONGO_INITDB_DATABASE=rizadb
+    ports:
+      - 27017:27017
+    volumes:
+      - rizadb_data:/data/db
+      - ./scripts/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - internal
+  dbseed:
+    container_name: dbseed
+    build:
+      context: ./dbseed
+    restart: on-failure
+    depends_on:
+      - rizadb
+    links:
+      - rizadb
+    networks:
+      - internal
+
+volumes:
+  rizadb_data:
+
+networks:
+  internal:
+  web:

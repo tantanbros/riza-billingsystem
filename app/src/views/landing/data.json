@@ -1,0 +1,41 @@
+{
+  "Header": {
+    "title": "BILLING SYSTEM",
+    "paragraph": "For Docking Boats and Ships with AIS Tracking"
+  },
+  "Team": [
+    {
+      "img": "./img/team/kristhel.jpg",
+      "name": "Anne Kristhel Bagamaspad",
+      "job": "ECE"
+    },
+    {
+      "img": "./img/team/riza.jpg",
+      "name": "Riza Martha Espiritu",
+      "job": "ECE"
+    }
+  ],
+
+  "Features": [
+    {
+      "icon": "fa fa-history",
+      "title": "Digital Invoice History",
+      "text": "Keep track of your previous and present bills digitally with our state of the art billing system"
+    },
+    {
+      "icon": "fa fa-credit-card",
+      "title": "Hassle-free Billing",
+      "text": "All-in-one AIS tracking and billing system for boats and ships"
+    },
+    {
+      "icon": "fa fa-group",
+      "title": "Easy Records Management",
+      "text": "Reduces overhead of billing and finance departments' workload with our intuitive application"
+    },
+    {
+      "icon": "fa fa-ship",
+      "title": "One of a Kind",
+      "text": "Unique Billing System with integrated AIS Tracking for boats and ships"
+    }
+  ]
+}
