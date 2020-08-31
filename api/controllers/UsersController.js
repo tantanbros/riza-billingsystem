@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const User = require("../models/User");
 const selectFields = require("../helpers/selectFields");
+const fs = require("fs");
+const uuid = require("uuid").v4;
 
 exports.createUser = async (req, res, next) => {
   const userToCreate = req.body;
@@ -122,6 +124,67 @@ exports.authenticateUser = async (req, res, next) => {
       return res.status(404).json({ message: "Invalid Email/Password" });
     }
     res.status(200).json(user);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "There was an error in the database" });
+  }
+};
+
+exports.uploadPicture = async (req, res, next) => {
+  const { userId } = req.params;
+
+  // make sure uploads directory exists
+  if (!fs.existsSync(process.env.UPLOADS_DIRECTORY)) {
+    fs.mkdirSync(process.env.UPLOADS_DIRECTORY);
+  }
+
+  // no file is uploaded, bad request
+  if (
+    !req.files ||
+    Object.keys(req.files).length === 0 ||
+    !req.files.profilePicture
+  ) {
+    return res.status(400).send("No files were uploaded.");
+  }
+
+  try {
+    // make sure user exists
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // generate unique filename
+    const { profilePicture } = req.files;
+    const ext = profilePicture.name.split(".").pop();
+    const newFilename = `${uuid()}.${ext}`;
+    const uploadPath = `${process.env.UPLOADS_DIRECTORY}/${newFilename}`;
+
+    // move the profilePicture to the uploads directory
+    profilePicture.mv(uploadPath, async err => {
+      if (err) {
+        return res.status(500).json(err);
+      }
+
+      console.log(user);
+      // before we update the profile picture, let's delete the old one that is saved.
+      if (user.profilePicture) {
+        const oldPicture = `${process.env.UPLOADS_DIRECTORY}/${user.profilePicture}`;
+        console.log("DELETE", { oldPicture });
+        fs.unlinkSync(oldPicture);
+      }
+
+      // update the user's profile picture in db w/ filename
+      const doc = await User.updateOne(
+        { _id: userId },
+        { profilePicture: newFilename }
+      );
+      console.log(doc);
+      if (doc.n < 1) {
+        return res.sendStatus(404);
+      }
+      res.status(200).json({ profilePicture: newFilename });
+    });
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: "There was an error in the database" });

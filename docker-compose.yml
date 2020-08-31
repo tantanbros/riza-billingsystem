@@ -11,6 +11,8 @@ services:
       - rizadb
     ports:
       - 5000:5000
+    volumes:
+      - rizaapi_uploads:/tmp/uploads
     networks:
       - internal
       - web
@@ -57,6 +59,7 @@ services:
 
 volumes:
   rizadb_data:
+  rizaapi_uploads:
 
 networks:
   internal:

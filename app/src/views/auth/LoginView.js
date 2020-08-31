@@ -79,7 +79,6 @@ const LoginView = () => {
                   if (res.status === 200) {
                     const user = await res.json();
                     setSavedUser(user);
-                    navigate('/dashboard', { replace: true });
                   } else {
                     // User not found
                     setInvalidCredentials(true);

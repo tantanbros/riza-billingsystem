@@ -6,7 +6,8 @@ const EmptyUser = {
   firstName: '',
   lastName: '',
   email: '',
-  role: null
+  role: null,
+  profilePicture: ''
 };
 
 const AppContext = React.createContext({

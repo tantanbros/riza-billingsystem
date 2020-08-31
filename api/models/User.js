@@ -35,6 +35,10 @@ let UserSchema = new Schema({
       ref: "Invoice",
     },
   ],
+  profilePicture: {
+    type: Schema.Types.String,
+    default: "",
+  },
 });
 
 module.exports = mongoose.model("User", UserSchema);

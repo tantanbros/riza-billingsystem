@@ -9,6 +9,7 @@ import {
   CardActions,
   CardContent,
   Divider,
+  Grid,
   Typography,
   makeStyles
 } from '@material-ui/core';
@@ -25,8 +26,33 @@ const useStyles = makeStyles(() => ({
 
 const Profile = ({ className, ...rest }) => {
   const classes = useStyles();
-  const { signedUser } = React.useContext(AppContext);
-  const avatar = '/static/images/avatars/avatar_6.png';
+  const { signedUser, setSavedUser } = React.useContext(AppContext);
+  const avatar = signedUser?.profilePicture
+    ? `${process.env.REACT_APP_API_URL}/files/${signedUser?.profilePicture}`
+    : '/static/images/avatars/avatar_default.png';
+
+  const handleUpload = event => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('profilePicture', file, file.name);
+
+    fetch(`${process.env.REACT_APP_API_URL}/users/${signedUser._id}/upload`, {
+      method: 'PATCH',
+      body: formData
+    })
+      .then(async res => {
+        if (res.status === 200) {
+          const { profilePicture } = await res.json();
+          setSavedUser({
+            ...signedUser,
+            profilePicture
+          });
+        }
+      })
+      .catch(err => console.error(err));
+  };
 
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
@@ -50,9 +76,23 @@ const Profile = ({ className, ...rest }) => {
       </CardContent>
       <Divider />
       <CardActions>
-        <Button color="primary" fullWidth variant="text">
-          Upload picture
-        </Button>
+        <Grid container justify="center">
+          <Grid item>
+            <label htmlFor="contained-button-file">
+              <Button color="primary" variant="text" component="span">
+                Upload picture
+              </Button>
+              <input
+                accept="image/*"
+                id="contained-button-file"
+                multiple
+                type="file"
+                style={{ display: 'none' }}
+                onChange={handleUpload}
+              />
+            </label>
+          </Grid>
+        </Grid>
       </CardActions>
     </Card>
   );

@@ -20,12 +20,6 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountBoxRoundedIcon from '@material-ui/icons/AccountBoxRounded';
 import NavItem from './NavItem';
 
-const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Shhhhmith'
-};
-
 const customerItems = [
   {
     href: '/customer',
@@ -105,13 +99,17 @@ const NavBar = ({ onMobileClose, openMobile }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
+  const avatar = signedUser?.profilePicture
+    ? `${process.env.REACT_APP_API_URL}/files/${signedUser?.profilePicture}`
+    : '/static/images/avatars/avatar_default.png';
+
   const content = (
     <Box height="100%" display="flex" flexDirection="column">
       <Box alignItems="center" display="flex" flexDirection="column" p={2}>
         <Avatar
           className={classes.avatar}
           component={RouterLink}
-          src={user.avatar}
+          src={avatar}
           to="/app/account"
         />
         <Typography className={classes.name} color="textPrimary" variant="h5">

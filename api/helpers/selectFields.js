@@ -1,5 +1,5 @@
 const selectFields = {
-  User: "_id firstName lastName email role",
+  User: "_id firstName lastName email role profilePicture",
 };
 
 module.exports = selectFields;

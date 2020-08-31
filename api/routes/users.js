@@ -23,6 +23,9 @@ router.put("/:userId", UsersController.updateUser);
 /** Authenticate User by Email and Password */
 router.post("/auth", UsersController.authenticateUser);
 
+/** Upload Profile Picture */
+router.patch("/:userId/upload", UsersController.uploadPicture);
+
 /** Update Password */
 router.patch("/:userId", UsersController.updatePassword);
 
