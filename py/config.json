@@ -1,0 +1,11 @@
+{
+  "account": {
+    "email": "admin@riza.com",
+    "password": "@dm1n"
+  },
+  "api": "http://localhost:5000",
+  "port": {
+    "name": "COM2",
+    "baud_rate": "9600"
+  }
+}

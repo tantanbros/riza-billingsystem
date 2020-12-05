@@ -13,6 +13,7 @@ const complaintsRouter = require("./routes/complaints");
 const invoicesRouter = require("./routes/invoices");
 const statsRouter = require("./routes/stats");
 const filesRouter = require("./routes/files");
+const othersRouter = require("./routes/others");
 
 const app = express();
 
@@ -30,5 +31,6 @@ app.use("/complaints", complaintsRouter);
 app.use("/invoices", invoicesRouter);
 app.use("/stats", statsRouter);
 app.use("/files", filesRouter);
+app.use("/others", othersRouter);
 
 module.exports = app;

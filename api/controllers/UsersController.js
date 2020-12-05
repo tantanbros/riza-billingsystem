@@ -40,6 +40,16 @@ exports.getUserById = async (req, res, next) => {
   }
 };
 
+exports.getBillerId = async (req, res, next) => {
+  try {
+    const billerId = await User.findOne({role: "PortAuthority"}).select("_id");
+    res.status(200).json(billerId);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "There was an error in the database" });
+  }
+}
+
 exports.getAllCustomers = async (req, res, next) => {
   try {
     const customers = await User.find({
