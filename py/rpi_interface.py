@@ -7,6 +7,7 @@ import xml.etree.ElementTree as et
 import shutil
 import ntpath
 import uuid
+from lxml import objectify
 
 # region Startup
 
@@ -49,14 +50,14 @@ def read_credentials():
 def parse_xml(file):
     print(f"Parsing ship xml file: {file}")
 
-    tree = et.parse(file)
-    root = tree.getroot()
+    parsed = objectify.parse(file)
+    root = parsed.getroot()
 
     ships = []
-    for item in root.findall("./rtept"):
+    for item in root.rte.rtept:
         ship = {
-            "name": item.find("name").text,
-            "time": item.find("time").text,
+            "name": item.name,
+            "time": item.time,
             "lat": item.attrib["lat"],
             "lon": item.attrib["lon"]
         }
