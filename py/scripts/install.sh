@@ -1,1 +1,1 @@
-../rpy/Scripts/python.exe -m pip install -r ../requirements.txt
+../rpynix/bin/python3 -m pip install -r ../requirements.txt

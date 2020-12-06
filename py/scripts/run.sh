@@ -1,1 +1,1 @@
-../rpy/Scripts/python.exe ../rpi_interface.py
+../rpynix/bin/python3 ../rpi_interface.py

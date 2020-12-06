@@ -10,12 +10,16 @@ exports.createInvoice = async (req, res, next) => {
   const customerId = invoiceToCreate.customer;
   const billerId = invoiceToCreate.biller;
 
+  console.log(req.body)
+
+  console.log({customerId, billerId})
+
   // customerId and billerId must be valid ObjectIds
   const isValid =
     mongoose.Types.ObjectId.isValid(customerId) &&
     mongoose.Types.ObjectId.isValid(billerId);
   if (!isValid) {
-    return res.status(404).json({ message: "User not found" });
+    return res.status(404).json({ message: "Invalid Object Ids" });
   }
 
   try {
@@ -54,6 +58,8 @@ exports.createInvoice = async (req, res, next) => {
           billingItems,
           totalAmount: invoiceToCreate.totalAmount,
         });
+
+        console.log(invoice)
 
         const doc = await invoice.save();
         console.log("Saved", { doc });

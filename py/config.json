@@ -1,11 +1,9 @@
 {
   "account": {
-    "email": "admin@riza.com",
-    "password": "@dm1n"
+    "email": "test@gmail.com",
+    "password": "test123"
   },
   "api": "http://localhost:5000",
-  "port": {
-    "name": "COM2",
-    "baud_rate": "9600"
-  }
+  "price": "1000",
+  "interval": "3"
 }
