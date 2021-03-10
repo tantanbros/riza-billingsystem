@@ -9,6 +9,11 @@
       "name": "Anne Kristhel Bagamaspad",
       "job": "ECE"
     },
+		{
+      "img": "./img/team/febus.jpg",
+      "name": "Engr. Febus Reidj Cruz",
+      "job": "Advisor, ECE Instructor"
+    },
     {
       "img": "./img/team/riza.jpg",
       "name": "Riza Martha Espiritu",
